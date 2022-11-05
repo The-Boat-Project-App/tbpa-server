@@ -3,6 +3,7 @@ import { TripModel } from "../models/trips/trip.model";
 import puppeteer from "puppeteer";
 
 export const getCoordinate = async () => {
+  console.log("getCoordinate()");
   const ACCEPT_BUTTON =
     "#qc-cmp2-ui > div.qc-cmp2-footer.qc-cmp2-footer-overlay.qc-cmp2-footer-scrolled > div > button.css-47sehv";
   const CURRENT_PORT_SELECTOR =
