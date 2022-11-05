@@ -11,7 +11,7 @@ export const getCoordinate = async () => {
     "#vesselDetails_latestPositionSection > div.MuiCollapse-root.MuiCollapse-vertical.MuiCollapse-entered.css-c4sutr > div > div > div > div > div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-md-true.css-4d8ot5 > p:nth-child(5) > b > a";
   const DATE_TIME_SELECTOR =
     "#vesselDetails_latestPositionSection > div.MuiCollapse-root.MuiCollapse-vertical.MuiCollapse-entered.css-c4sutr > div > div > div > div > div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-md-true.css-4d8ot5 > p:nth-child(1) > b";
-
+  // added no-sandbox for heroku
   const browser = await puppeteer.launch({
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
