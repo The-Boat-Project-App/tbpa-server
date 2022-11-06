@@ -9,27 +9,46 @@ import {
   Ctx,
   UseMiddleware,
   Int,
-} from "type-graphql";
-import { TripModel, Trip, Location } from "../models/trips/trip.model";
-import { Boat } from "../models/trips/boat";
+} from 'type-graphql'
+import { TripModel, Trip, Location } from '../models/trips/trip.model'
+import { Boat } from '../models/trips/boat'
 // import { Location } from '../models/trips/location'
-import { getCoordinate } from "../puppeteer/index";
-import { TripInput } from "./types/trip-input";
-import { sign } from "jsonwebtoken";
-import { MyContext } from "./MyContext";
-import { createAccessToken, createRefreshToken } from "./auth";
-import { isAuth } from "./isAuth";
-import { sendRefreshToken } from "./sendRefreshToken";
+import { getCoordinate } from '../puppeteer/index'
+import { TripInput } from './types/trip-input'
+import { sign } from 'jsonwebtoken'
+import { MyContext } from './MyContext'
+import { createAccessToken, createRefreshToken } from './auth'
+import { isAuth } from './isAuth'
+import { sendRefreshToken } from './sendRefreshToken'
 
 @Resolver((_of) => Trip)
 export class TripResolver {
-  @Mutation(() => Trip, { name: "updateTrip" })
+  @Query((_returns) => Trip, { nullable: false, name: 'Trip' })
+  async getTripById(@Arg('id') id: string) {
+    const tripData = await TripModel.findById({ _id: id })
+    console.log('✏️🧡tripData dans resolver', tripData)
+    const formattedTripData = {
+      id: tripData._id,
+      locations: [
+        {
+          name: tripData.locations[tripData.locations.length - 1].name,
+          latitude: tripData.locations[tripData.locations.length - 1].latitude,
+          longitude: tripData.locations[tripData.locations.length - 1].longitude,
+          date: tripData.locations[tripData.locations.length - 1].date,
+          description: tripData.locations[tripData.locations.length - 1].date,
+        },
+      ],
+    }
+    return formattedTripData
+  }
+
+  @Mutation(() => Trip, { name: 'updateTrip' })
   async updateTrips(): Promise<Trip> {
-    console.log("resolver atteint");
-    const coords = await getCoordinate();
-    console.log("🤩coords", coords);
+    console.log('resolver atteint')
+    const coords = await getCoordinate()
+    console.log('🤩coords', coords)
     const updatedTrip = await TripModel.updateOne(
-      { _id: "63627a16ad3d7a6d9999e8e9" },
+      { _id: '63627a16ad3d7a6d9999e8e9' },
       {
         $push: {
           locations: {
@@ -37,16 +56,16 @@ export class TripResolver {
             longitude: Number(coords.coords[1]),
             date: coords.date,
             name: coords.currentPort,
-            description: "description",
+            description: 'description',
           },
         },
       },
-      { new: true }
-    );
+      { new: true },
+    )
     const refreshedTrip = await TripModel.findOne({
-      _id: "63627a16ad3d7a6d9999e8e9",
-    });
-    console.log("updatedTrip", refreshedTrip);
-    return refreshedTrip;
+      _id: '63627a16ad3d7a6d9999e8e9',
+    })
+    console.log('updatedTrip', refreshedTrip)
+    return refreshedTrip
   }
 }

@@ -34,6 +34,8 @@ class LoginResponse {
   avatar: string
   @Field()
   status: string
+  @Field()
+  email: string
 }
 
 @ObjectType()
@@ -50,6 +52,8 @@ class RegisterResponse {
   avatar: string
   @Field()
   status: string
+  @Field()
+  email: string
 }
 
 @Resolver((_of) => Users)
@@ -62,7 +66,7 @@ export class UsersResolver {
   }
   //*
 
-  @Query((_returns) => Users, { nullable: false, name: 'users' })
+  @Query((_returns) => Users, { nullable: false, name: 'userInfo' })
   async getUsersById(@Arg('id') id: string) {
     return await UsersModel.findById({ _id: id })
   }
@@ -100,6 +104,7 @@ export class UsersResolver {
       firstName: user.firstName,
       avatar: user.avatar,
       status: user.status,
+      email: user.email,
     }
   }
 
@@ -134,6 +139,7 @@ export class UsersResolver {
       firstName: user.firstName,
       avatar: user.avatar,
       status: user.status,
+      email: user.email,
     }
   }
 

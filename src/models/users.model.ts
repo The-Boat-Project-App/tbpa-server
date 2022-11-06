@@ -35,9 +35,9 @@ export class Users {
   @Property({ type: String, required: false })
   bio: string
 
-  @Field({ nullable: true })
-  @Property({ type: String, required: false })
-  lang: string
+  @Field(() => [String])
+  @Property({ type: [String], required: false })
+  lang: [string]
 
   @Field({ nullable: true })
   @Property({ type: String, required: false })
@@ -50,6 +50,10 @@ export class Users {
   @Field({ nullable: true })
   @Property({ type: String, required: false })
   country: string
+
+  @Field({ nullable: true })
+  @Property({ type: String, required: false })
+  city: string
 
   @Field({ nullable: true })
   active: boolean

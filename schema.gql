@@ -31,6 +31,7 @@ type LocationObject {
 type LoginResponse {
   accessToken: String!
   avatar: String!
+  email: String!
   firstName: String!
   lastName: String!
   refreshToken: String!
@@ -131,14 +132,18 @@ type Query {
   NewsList: [News!]!
   Posts(id: String!): Posts!
 
+  """Get List of Posts By User"""
+  PostsByUserList(id: String!): [Posts!]!
+
   """Get List of Posts"""
   PostsList: [Posts!]!
+  Trip(id: String!): Trip!
   notes(id: String!): Notes!
 
   """Get List of Notes"""
   notesList: [Notes!]!
   user: Users!
-  users(id: String!): Users!
+  userInfo(id: String!): Users!
 
   """Get List of Users"""
   usersList: [Users!]!
@@ -147,6 +152,7 @@ type Query {
 type RegisterResponse {
   accessToken: String!
   avatar: String!
+  email: String!
   firstName: String!
   lastName: String!
   refreshToken: String!
@@ -184,12 +190,13 @@ type Users {
   audio: String
   avatar: String
   bio: String
+  city: String
   country: String
   createdAt: DateTime!
   email: String
   firstName: String!
   id: ID!
-  lang: String
+  lang: [String!]!
   lastLogin: DateTime!
   lastName: String!
   password: String
@@ -204,12 +211,13 @@ input UsersInput {
   audio: String
   avatar: String
   bio: String
+  city: String
   country: String
   createdAt: DateTime
   email: String
   firstName: String
   id: ID
-  lang: String
+  lang: [String!]
   lastLogin: DateTime
   lastName: String
   password: String

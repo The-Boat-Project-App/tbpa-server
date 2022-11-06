@@ -36,6 +36,14 @@ export class PostsResolver {
     return await PostsModel.find()
   }
 
+  @Query(() => [Posts], { name: 'PostsByUserList', description: 'Get List of Posts By User' })
+  async getPostsByUser(@Arg('id') id: string) {
+    console.log('id from front', id)
+    const foundPosts = await PostsModel.find({ author: id, validated: 'validated' })
+    console.log(foundPosts)
+    return foundPosts
+  }
+
   @Mutation(() => Posts, { name: 'createPosts' })
   @UseMiddleware(isAuth)
   async createPosts(

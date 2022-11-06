@@ -27,8 +27,8 @@ export class UsersInput implements Partial<Users> {
   @Field({ nullable: true })
   bio: string
 
-  @Field({ nullable: true })
-  lang: string
+  @Field(() => [String], { nullable: true })
+  lang: [string]
 
   @Field({ nullable: true })
   appLang: string
@@ -38,6 +38,9 @@ export class UsersInput implements Partial<Users> {
 
   @Field({ nullable: true })
   country: string
+
+  @Field({ nullable: true })
+  city: string
 
   @Field({ nullable: true })
   active: boolean
