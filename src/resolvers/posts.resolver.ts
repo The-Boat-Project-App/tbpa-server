@@ -26,7 +26,7 @@ export class PostsResolver {
     const postData = await PostsModel.findById({ _id: id })
       .populate({ path: 'author', model: Users })
       .exec()
-    console.log('✏️🧡postData dans resolver', postData)
+    console.log('✏️🧡postDnata dans resolver', postData)
 
     return postData
   }
