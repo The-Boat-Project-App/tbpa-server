@@ -142,8 +142,7 @@ type Query {
 
   """Get List of Notes"""
   notesList: [Notes!]!
-  user: Users!
-  userInfo(id: String!): Users!
+  user(id: String!): Users!
 
   """Get List of Users"""
   usersList: [Users!]!

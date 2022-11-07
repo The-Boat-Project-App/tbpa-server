@@ -66,8 +66,9 @@ export class UsersResolver {
   }
   //*
 
-  @Query((_returns) => Users, { nullable: false, name: 'userInfo' })
+  @Query((_returns) => Users, { nullable: false, name: 'user' })
   async getUsersById(@Arg('id') id: string) {
+    console.log('dans le resolver users')
     return await UsersModel.findById({ _id: id })
   }
 
