@@ -62,6 +62,7 @@ type News {
   content: String
   createdAt: DateTime!
   id: ID!
+  intro: String
   isActive: Boolean
   mainPicture: String
   title: String!
@@ -72,6 +73,7 @@ input NewsInput {
   content: String
   createdAt: DateTime
   id: ID
+  intro: String
   isActive: Boolean
   mainPicture: String
   title: String!
