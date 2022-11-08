@@ -23,6 +23,10 @@ export class News {
   @Property({ type: () => String, required: false })
   content: string
 
+  @Field({ nullable: true })
+  @Property({ type: () => String, required: false })
+  intro: string
+
   @Field()
   @Property({ required: true, default: Date.now })
   createdAt: Date

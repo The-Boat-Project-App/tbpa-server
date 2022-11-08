@@ -26,7 +26,6 @@ export class TripResolver {
   @Query((_returns) => Trip, { nullable: false, name: 'Trip' })
   async getTripById(@Arg('id') id: string) {
     const tripData = await TripModel.findById({ _id: id })
-    console.log('✏️🧡tripData dans resolver', tripData)
     const formattedTripData = {
       id: tripData._id,
       locations: [
@@ -44,9 +43,7 @@ export class TripResolver {
 
   @Mutation(() => Trip, { name: 'updateTrip' })
   async updateTrips(): Promise<Trip> {
-    console.log('resolver atteint')
     const coords = await getCoordinate()
-    console.log('🤩coords', coords)
     const updatedTrip = await TripModel.updateOne(
       { _id: '63627a16ad3d7a6d9999e8e9' },
       {
@@ -65,7 +62,6 @@ export class TripResolver {
     const refreshedTrip = await TripModel.findOne({
       _id: '63627a16ad3d7a6d9999e8e9',
     })
-    console.log('updatedTrip', refreshedTrip)
     return refreshedTrip
   }
 }

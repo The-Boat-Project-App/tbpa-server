@@ -14,6 +14,8 @@ export class NewsInput implements Partial<News> {
 
   @Field({ nullable: true })
   mainPicture: string
+  @Field({ nullable: true })
+  intro: string
 
   @Field({ nullable: true })
   content: string

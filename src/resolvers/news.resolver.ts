@@ -7,7 +7,12 @@ import { isAuth } from './isAuth'
 export class NewsResolver {
   @Query((_returns) => News, { nullable: false, name: 'News' })
   async getNewsById(@Arg('id') id: string) {
-    return await NewsModel.findById({ _id: id })
+    console.log('id', id)
+    const newsData = await NewsModel.findById({ _id: id })
+
+    console.log('✏️🧡newsdata dans resolver', newsData)
+
+    return newsData
   }
 
   @Query(() => [News], { name: 'NewsList', description: 'Get List of News' })
