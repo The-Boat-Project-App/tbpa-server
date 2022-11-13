@@ -1,7 +1,7 @@
 import { Ref } from '@typegoose/typegoose'
 import { Field, InputType, ID } from 'type-graphql'
 import { Boat } from '../../models/trips/boat'
-import { PartnersModel } from '../../models/partners.model'
+import { Partners, PartnersModel } from '../../models/partners.model'
 
 @InputType()
 class Intro {
