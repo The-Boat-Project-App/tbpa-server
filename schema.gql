@@ -128,6 +128,8 @@ input PostsInput {
 }
 
 type Query {
+  """Get List of All Posts By User"""
+  AllPostsByUserList(id: String!): [Posts!]!
   News(id: String!): News!
 
   """Get List of News"""
@@ -140,6 +142,9 @@ type Query {
   """Get List of Posts"""
   PostsList: [Posts!]!
   Trip(id: String!): Trip!
+
+  """Get List of Validated Posts"""
+  ValidatedPostsList: [Posts!]!
   notes(id: String!): Notes!
 
   """Get List of Notes"""
@@ -182,6 +187,7 @@ input ThemesInput {
 type Trip {
   id: ID!
   locations: [LocationObject!]!
+  start_date: DateTime
 }
 
 """The Users Model"""

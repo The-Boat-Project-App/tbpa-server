@@ -29,6 +29,9 @@ export class TripInput implements Partial<Trip> {
   @Field(() => [Location], { nullable: true })
   locations?: [Location]
 
+  @Field({ nullable: true })
+  start_date: Date
+
   // @Field({ nullable: true })
   // private country?: string
 

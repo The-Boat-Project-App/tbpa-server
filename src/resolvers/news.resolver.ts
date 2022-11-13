@@ -17,6 +17,7 @@ export class NewsResolver {
 
   @Query(() => [News], { name: 'NewsList', description: 'Get List of News' })
   async getAllNews() {
+    console.log('resolver getallnews')
     return await NewsModel.find()
   }
 
