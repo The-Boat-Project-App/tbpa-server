@@ -98,6 +98,23 @@ input NotesInput {
   title: String!
 }
 
+"""The Partners Model"""
+type Partners {
+  address: String
+  city: String
+  content: contentObject!
+  country: String
+  createdAt: DateTime!
+  id: ID!
+  intro: introObject!
+  latitude: Float!
+  logo: String
+  longitude: Float!
+  main_picture: String
+  name: nameObject!
+  website: String
+}
+
 """The Posts Model"""
 type Posts {
   author: Users!
@@ -134,6 +151,10 @@ type Query {
 
   """Get List of News"""
   NewsList: [News!]!
+  Partner(id: String!): Partners!
+
+  """Get List of Partners"""
+  PartnersList: [Partners!]!
   Posts(id: String!): Posts!
 
   """Get List of Posts By User"""
@@ -230,4 +251,28 @@ input UsersInput {
   password: String
   status: String
   updatedAt: DateTime
+}
+
+type contentObject {
+  AR: String!
+  EN: String!
+  ES: String!
+  FR: String!
+  IT: String!
+}
+
+type introObject {
+  AR: String!
+  EN: String!
+  ES: String!
+  FR: String!
+  IT: String!
+}
+
+type nameObject {
+  AR: String!
+  EN: String!
+  ES: String!
+  FR: String!
+  IT: String!
 }

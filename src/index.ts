@@ -19,6 +19,8 @@ import { createAccessToken, createRefreshToken } from './resolvers/auth'
 import { sendRefreshToken } from './resolvers/sendRefreshToken'
 import { PostsResolver } from './resolvers/posts.resolver'
 import { TripResolver } from './resolvers/trip.resolver'
+import { PartnerResolver } from './resolvers/partners.resolver'
+
 import { getCoordinate } from './puppeteer/index'
 
 const executeMain = async () => {
@@ -33,6 +35,7 @@ const executeMain = async () => {
       PostsResolver,
       ThemesResolver,
       TripResolver,
+      PartnerResolver,
     ],
     emitSchemaFile: true,
     validate: false,
