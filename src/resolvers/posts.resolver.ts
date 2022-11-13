@@ -36,10 +36,25 @@ export class PostsResolver {
     return await PostsModel.find()
   }
 
+  @Query(() => [Posts], { name: 'ValidatedPostsList', description: 'Get List of Validated Posts' })
+  async getValidatedPosts() {
+    return await PostsModel.find({ validated: 'validated' })
+  }
+
   @Query(() => [Posts], { name: 'PostsByUserList', description: 'Get List of Posts By User' })
   async getPostsByUser(@Arg('id') id: string) {
     console.log('id from front', id)
     const foundPosts = await PostsModel.find({ author: id, validated: 'validated' })
+    console.log(foundPosts)
+    return foundPosts
+  }
+  @Query(() => [Posts], {
+    name: 'AllPostsByUserList',
+    description: 'Get List of All Posts By User',
+  })
+  async getAllPostsByUser(@Arg('id') id: string) {
+    console.log('id from front', id)
+    const foundPosts = await PostsModel.find({ author: id })
     console.log(foundPosts)
     return foundPosts
   }

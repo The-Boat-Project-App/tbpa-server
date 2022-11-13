@@ -28,6 +28,7 @@ export class TripResolver {
     const tripData = await TripModel.findById({ _id: id })
     const formattedTripData = {
       id: tripData._id,
+      start_date: tripData.start_date,
       locations: [
         {
           name: tripData.locations[tripData.locations.length - 1].name,
