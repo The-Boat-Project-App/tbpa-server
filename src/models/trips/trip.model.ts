@@ -29,17 +29,17 @@ export class Trip {
   @Field(() => ID)
   id: string
 
-  // @Field(() => Boat)
-  // @Property({ type: () => Boat })
-  // private boat?: Boat
-
   @Field({ nullable: true })
-  @Property({ type: Date, required: true })
+  @Property({ type: () => Date })
   start_date: Date
 
   @Field(() => [Location])
   @Property({ type: () => [Location] })
   locations: Location[]
+
+  // @Field(() => Boat)
+  // @Property({ type: () => Boat })
+  // private boat?: Boat
 
   // @Field()
   // @Property({ type: () => String, required: true })

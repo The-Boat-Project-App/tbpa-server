@@ -25,6 +25,7 @@ import { sendRefreshToken } from './sendRefreshToken'
 export class TripResolver {
   @Query((_returns) => Trip, { nullable: false, name: 'Trip' })
   async getTripById(@Arg('id') id: string) {
+    console.log('dans resolver getTripbyid')
     const tripData = await TripModel.findById({ _id: id })
     const formattedTripData = {
       id: tripData._id,
