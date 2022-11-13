@@ -38,6 +38,7 @@ export class PostsResolver {
 
   @Query(() => [Posts], { name: 'ValidatedPostsList', description: 'Get List of Validated Posts' })
   async getValidatedPosts() {
+    console.log('dans resolver getValidatedPosts')
     return await PostsModel.find({ validated: 'validated' })
   }
 
