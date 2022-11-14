@@ -49,6 +49,29 @@ export class PostsResolver {
     console.log(foundPosts)
     return foundPosts
   }
+  // get all draft posts
+  @Query(() => [Posts], {
+    name: 'AllDraftPostsByUserList',
+    description: 'Get List of All Draft Posts By User',
+  })
+  @UseMiddleware(isAuth)
+  async getAllDraftPostsByUser(@Ctx() { payload }: MyContext) {
+    const draftPosts = await PostsModel.find({ author: payload.userId, submitted: false })
+    console.log('foundPosts', draftPosts)
+    return draftPosts
+  }
+  // get all submitted posts
+  @Query(() => [Posts], {
+    name: 'AllSubmittedPostsByUserList',
+    description: 'Get List of All Submitted Posts By User',
+  })
+  @UseMiddleware(isAuth)
+  async getAllSubmittedPostsByUser(@Ctx() { payload }: MyContext) {
+    const submittedPosts = await PostsModel.find({ author: payload.userId, submitted: true })
+    console.log('submittedPosts', submittedPosts)
+    return submittedPosts
+  }
+
   @Query(() => [Posts], {
     name: 'AllPostsByUserList',
     description: 'Get List of All Posts By User',

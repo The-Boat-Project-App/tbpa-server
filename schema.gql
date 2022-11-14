@@ -145,8 +145,14 @@ input PostsInput {
 }
 
 type Query {
+  """Get List of All Draft Posts By User"""
+  AllDraftPostsByUserList: [Posts!]!
+
   """Get List of All Posts By User"""
   AllPostsByUserList: [Posts!]!
+
+  """Get List of All Submitted Posts By User"""
+  AllSubmittedPostsByUserList: [Posts!]!
   News(id: String!): News!
 
   """Get List of News"""
