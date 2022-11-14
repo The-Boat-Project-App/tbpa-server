@@ -53,10 +53,10 @@ export class PostsResolver {
     name: 'AllPostsByUserList',
     description: 'Get List of All Posts By User',
   })
-  async getAllPostsByUser(@Arg('id') id: string) {
-    console.log('id from front', id)
-    const foundPosts = await PostsModel.find({ author: id })
-    console.log(foundPosts)
+  @UseMiddleware(isAuth)
+  async getAllPostsByUser(@Ctx() { payload }: MyContext) {
+    const foundPosts = await PostsModel.find({ author: payload.userId })
+    console.log('foundPosts', foundPosts)
     return foundPosts
   }
 
