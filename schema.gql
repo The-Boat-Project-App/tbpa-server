@@ -146,7 +146,7 @@ input PostsInput {
 
 type Query {
   """Get List of All Posts By User"""
-  AllPostsByUserList(id: String!): [Posts!]!
+  AllPostsByUserList: [Posts!]!
   News(id: String!): News!
 
   """Get List of News"""
