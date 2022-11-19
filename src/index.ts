@@ -9,6 +9,7 @@ dotenv.config()
 import cookieParser from 'cookie-parser'
 import { UsersModel } from './models/users.model'
 import cors from 'cors'
+import http from 'http'
 
 // Resolvers
 import { NotesResolver } from './resolvers/notes.resolver'
@@ -20,12 +21,14 @@ import { sendRefreshToken } from './resolvers/sendRefreshToken'
 import { PostsResolver } from './resolvers/posts.resolver'
 import { TripResolver } from './resolvers/trip.resolver'
 import { PartnerResolver } from './resolvers/partners.resolver'
-
-import { getCoordinate } from './puppeteer/index'
+import { MessagesResolver } from './resolvers/messages.resolver'
 
 const executeMain = async () => {
+  const expressServer: Express.Application = Express()
+
+  expressServer.use(cors({ origin: 'http://localhost:3000', credentials: true }))
+  expressServer.use(cookieParser())
   dotenv.config()
-  // getCoordinate()
 
   const schema = await buildSchema({
     resolvers: [
@@ -36,6 +39,7 @@ const executeMain = async () => {
       ThemesResolver,
       TripResolver,
       PartnerResolver,
+      MessagesResolver,
     ],
     emitSchemaFile: true,
     validate: false,
@@ -47,9 +51,26 @@ const executeMain = async () => {
   )
 
   await mongoose.connection
-  //* APOLLO SERVER
-  const server = new ApolloServer({ schema: schema, context: ({ req, res }) => ({ req, res }) })
-  const expressServer: Express.Application = Express()
+  //* APOLLO SERVER WITH SUBSCRIPTIONSs
+  const apollo = new ApolloServer({
+    schema: schema,
+    subscriptions: {
+      path: '/subscriptions',
+      onConnect: () => {
+        console.log('Client connected for subscriptions')
+      },
+      onDisconnect: () => {
+        console.log('Client disconnected from subscriptions')
+      },
+    },
+    context: ({ req, res }) => ({ req, res }),
+  })
+
+  apollo.applyMiddleware({ app: expressServer })
+  const httpServer = http.createServer(expressServer)
+
+  apollo.installSubscriptionHandlers(httpServer)
+
   expressServer.use(cors({ origin: 'http://localhost:3000', credentials: true }))
   expressServer.use(cookieParser())
 
@@ -119,13 +140,15 @@ const executeMain = async () => {
     return res.send({ ok: true, accessToken: createAccessToken(user) })
   })
 
-  server.applyMiddleware({ app: expressServer })
   const PORT = process.env.PORT || 3333
-  expressServer.listen({ port: PORT }, () =>
+  httpServer.listen({ port: PORT }, () => {
     console.log(
-      `✨✨Server ready and listening at ==> http://localhost:${process.env.PORT}${server.graphqlPath}`,
-    ),
-  )
+      `✨✨Server ready and listening at ==> http://localhost:${process.env.PORT}${apollo.graphqlPath}`,
+    )
+    console.log(
+      `Subscriptions ready at ws://localhost:${process.env.PORT}${apollo.subscriptionsPath}`,
+    )
+  })
 }
 
 executeMain().catch((error) => {

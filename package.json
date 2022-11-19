@@ -16,9 +16,10 @@
   "author": "Author Name",
   "license": "ISC",
   "dependencies": {
-    "@graphql-tools/schema": "^9.0.4",
+    "@graphql-tools/schema": "^9.0.10",
     "@typegoose/typegoose": "^7.6.0",
     "@types/validator": "^13.7.10",
+    "apollo-server-core": "^3.11.1",
     "apollo-server-express": "^2.24.0",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.13.2",
@@ -33,7 +34,7 @@
     "puppeteer": "^18.0.5",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1",
-    "ws": "^8.9.0"
+    "ws": "^8.11.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
