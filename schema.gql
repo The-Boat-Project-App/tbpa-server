@@ -38,8 +38,26 @@ type LoginResponse {
   status: String!
 }
 
+"""The Messages Model"""
+type Messages {
+  author: Users
+  content: String
+  createdAt: DateTime
+  id: ID
+  mainPicture: String
+}
+
+input MessagesInput {
+  author: String
+  content: String
+  createdAt: DateTime
+  id: ID
+  mainPicture: String
+}
+
 type Mutation {
   addLikes(id: String!): String!
+  createMessages(newMessagesInput: MessagesInput!): Messages!
   createNews(newNewsInput: NewsInput!): News!
   createNotes(newNotesInput: NotesInput!): Notes!
   createPosts(newPostsInput: PostsInput!): Posts!
@@ -153,6 +171,9 @@ type Query {
 
   """Get List of All Submitted Posts By User"""
   AllSubmittedPostsByUserList: [Posts!]!
+
+  """Get List of Messages"""
+  MessagesList: [Messages!]!
   News(id: String!): News!
 
   """Get List of News"""
@@ -194,6 +215,7 @@ type RegisterResponse {
 
 type Subscription {
   likeAdded: Posts!
+  messageSent: Messages!
 }
 
 type ThemeCreatedResponse {
