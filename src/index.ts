@@ -53,6 +53,8 @@ const executeMain = async () => {
   await mongoose.connection
   //* APOLLO SERVER WITH SUBSCRIPTIONSs
   const apollo = new ApolloServer({
+    introspection: true,
+    playground: true,
     schema: schema,
     subscriptions: {
       path: '/subscriptions',
