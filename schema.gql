@@ -216,6 +216,7 @@ type RegisterResponse {
 type Subscription {
   likeAdded: Posts!
   messageSent: Messages!
+  newUserConnected: Users!
 }
 
 type ThemeCreatedResponse {
