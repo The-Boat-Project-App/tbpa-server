@@ -53,6 +53,8 @@ const executeMain = async () => {
   await mongoose.connection
   //* APOLLO SERVER WITH SUBSCRIPTIONSs
   const apollo = new ApolloServer({
+    introspection: true,
+    playground: true,
     schema: schema,
     subscriptions: {
       path: '/subscriptions',
@@ -110,6 +112,7 @@ const executeMain = async () => {
       lastName: user.lastName,
       avatar: user.avatar,
       status: user.status,
+      email: user.email,
     })
   })
   //* REST API Route for web JWT REFRESH TOKEN

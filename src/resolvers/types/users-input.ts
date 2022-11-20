@@ -53,4 +53,10 @@ export class UsersInput implements Partial<Users> {
 
   @Field({ nullable: true })
   lastLogin: Date
+
+  @Field({ nullable: true })
+  isOnline: boolean
+
+  @Field({ nullable: true })
+  isOnChat: boolean
 }

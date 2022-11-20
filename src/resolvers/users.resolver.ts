@@ -3,12 +3,14 @@ import {
   Mutation,
   Arg,
   Query,
-  ID,
   ObjectType,
   Field,
   Ctx,
   UseMiddleware,
-  Int,
+  Subscription,
+  PubSub,
+  PubSubEngine,
+  Root,
 } from 'type-graphql'
 import { UsersModel, Users } from '../models/users.model'
 import { UsersInput } from './types/users-input'

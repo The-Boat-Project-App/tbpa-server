@@ -73,6 +73,14 @@ export class Users {
   @Field()
   @Property({ required: false, default: 0 })
   tokenVersion: number
+
+  @Field()
+  @Property({ required: false, default: false })
+  isOnline: boolean
+
+  @Field()
+  @Property({ required: false, default: false })
+  isOnChat: boolean
 }
 
 export const UsersModel = getModelForClass(Users)
