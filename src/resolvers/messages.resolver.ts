@@ -50,6 +50,8 @@ export class MessagesResolver {
 
   @Mutation(() => Users, { name: 'newUserConnected', description: 'user connecting to chat' })
   async connectToChat(@PubSub() pubSub: PubSubEngine, @Ctx() { payload }: MyContext) {
+    console.log('payload in connection', payload)
+
     const newUserConnected = await UsersModel.findOne({ _id: payload.userId })
 
     console.log('newuserconnected envoyé dans le payload', newUserConnected)
@@ -74,6 +76,8 @@ export class MessagesResolver {
     description: 'user disconnecting from chat',
   })
   async disconnectFromChat(@PubSub() pubSub: PubSubEngine, @Ctx() { payload }: MyContext) {
+    console.log('payload in disconnection', payload)
+
     const newUserDisconnected = await UsersModel.findOne({ _id: payload.userId })
 
     // console.log('allMessagesInDb', allMessagesInDb)
