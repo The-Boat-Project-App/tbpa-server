@@ -112,6 +112,7 @@ const executeMain = async () => {
       lastName: user.lastName,
       avatar: user.avatar,
       status: user.status,
+      email: user.email,
     })
   })
   //* REST API Route for web JWT REFRESH TOKEN
