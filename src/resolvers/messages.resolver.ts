@@ -48,9 +48,62 @@ export class MessagesResolver {
     return allMessagesInDb
   }
 
+  @Mutation(() => Users, { name: 'newUserConnected', description: 'user connecting to chat' })
+  async connectToChat(@PubSub() pubSub: PubSubEngine, @Ctx() { payload }: MyContext) {
+    const newUserConnected = await UsersModel.findOne({ _id: payload.userId })
+
+    console.log('newuserconnected envoyé dans le payload', newUserConnected)
+    const { lang, tokenVersion, id, firstName, lastName, email, password, avatar, status } =
+      newUserConnected
+    await pubSub.publish('USER_CONNECTED_NOTIFICATION', {
+      lang,
+      tokenVersion,
+      id,
+      firstName,
+      lastName,
+      email,
+      password,
+      avatar,
+      status,
+    })
+    return newUserConnected
+  }
+
+  @Mutation(() => Users, {
+    name: 'newUserDisconnected',
+    description: 'user disconnecting from chat',
+  })
+  async disconnectFromChat(@PubSub() pubSub: PubSubEngine, @Ctx() { payload }: MyContext) {
+    const newUserDisconnected = await UsersModel.findOne({ _id: payload.userId })
+
+    // console.log('allMessagesInDb', allMessagesInDb)
+    console.log('newuserdisconnected envoyé dans le payload', newUserDisconnected)
+    const { lang, tokenVersion, id, firstName, lastName, email, password, avatar, status } =
+      newUserDisconnected
+    await pubSub.publish('USER_DISCONNECTED_NOTIFICATION', {
+      lang,
+      tokenVersion,
+      id,
+      firstName,
+      lastName,
+      email,
+      password,
+      avatar,
+      status,
+    })
+    return newUserDisconnected
+  }
+
   @Subscription({ topics: 'USER_CONNECTED_NOTIFICATION' })
   newUserConnected(@Root() payload: Users): Users {
     console.log('sub newuserconnected', payload)
+    // const { id, author, mainPicture, content, createdAt } = payload.Messages.payLoad
+    return payload
+  }
+
+  @Subscription({ topics: 'USER_DISCONNECTED_NOTIFICATION' })
+  newUserDisconnected(@Root() payload: Users): Users {
+    console.log('sub newuserdisconnected', payload)
     // const { id, author, mainPicture, content, createdAt } = payload.Messages.payLoad
     return payload
   }
@@ -103,6 +156,4 @@ export class MessagesResolver {
 
   //     return id
   //   }
-
-  //!
 }

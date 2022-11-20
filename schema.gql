@@ -68,6 +68,12 @@ type Mutation {
   deletePosts(id: String!): String!
   deleteUsers(id: String!): String!
   loginUsers(UsersLoginInput: UsersInput!): LoginResponse!
+
+  """user connecting to chat"""
+  newUserConnected: Users!
+
+  """user disconnecting from chat"""
+  newUserDisconnected: Users!
   revokeRefreshTokensForUser(userId: String!): Boolean!
   updateNotes(editNotesInput: NotesInput!): Notes!
   updatePosts(editPostsInput: PostsInput!): Posts!
@@ -217,6 +223,7 @@ type Subscription {
   likeAdded: Posts!
   messageSent: Messages!
   newUserConnected: Users!
+  newUserDisconnected: Users!
 }
 
 type ThemeCreatedResponse {
