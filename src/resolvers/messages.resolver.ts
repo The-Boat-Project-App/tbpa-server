@@ -17,7 +17,6 @@ import { MessagesInput } from './types/messages-input'
 import { MyContext } from './MyContext'
 
 import { isAuth } from './isAuth'
-
 @Resolver((_of) => Messages)
 export class MessagesResolver {
   @UseMiddleware(isAuth)

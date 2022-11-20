@@ -260,6 +260,8 @@ type Users {
   email: String
   firstName: String!
   id: ID!
+  isOnChat: Boolean!
+  isOnline: Boolean!
   lang: [String!]!
   lastLogin: DateTime!
   lastName: String!
@@ -281,6 +283,8 @@ input UsersInput {
   email: String
   firstName: String
   id: ID
+  isOnChat: Boolean
+  isOnline: Boolean
   lang: [String!]
   lastLogin: DateTime
   lastName: String
