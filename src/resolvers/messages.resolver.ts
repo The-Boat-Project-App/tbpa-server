@@ -48,6 +48,7 @@ export class MessagesResolver {
     return allMessagesInDb
   }
 
+  @UseMiddleware(isAuth)
   @Mutation(() => Users, { name: 'newUserConnected', description: 'user connecting to chat' })
   async connectToChat(@PubSub() pubSub: PubSubEngine, @Ctx() { payload }: MyContext) {
     console.log('payload in connection', payload)
@@ -71,6 +72,7 @@ export class MessagesResolver {
     return newUserConnected
   }
 
+  @UseMiddleware(isAuth)
   @Mutation(() => Users, {
     name: 'newUserDisconnected',
     description: 'user disconnecting from chat',
