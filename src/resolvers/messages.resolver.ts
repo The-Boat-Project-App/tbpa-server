@@ -145,6 +145,27 @@ export class MessagesResolver {
     // const { id, author, mainPicture, content, createdAt } = payload.Messages.payLoad
     return payload
   }
+
+  //resolver de suppression
+  @Mutation(() => Messages, { name: 'deleteMessages' })
+  @UseMiddleware(isAuth)
+  async deleteMessages(
+    @Arg('messageId') messageId: string,
+    @PubSub() pubSub: PubSubEngine,
+    @Ctx() { payload }: MyContext,
+  ) {
+    const User = await UsersModel.findOne({ _id: payload.id, status: 'crew' })
+    console.log('User trouvé dans resolver deleteMessages', User)
+    if (User) {
+      const MessageDeleted = await MessagesModel.deleteOne({
+        _id: messageId,
+      })
+      console.log('Messages apres suppression mongo', Messages)
+      return MessageDeleted
+    } else {
+      return 'Error user not allowed to delete a message'
+    }
+  }
   //   @Query(() => String, { name: 'usersConnectedToChat' })
   //   async usersConnectedToChat(
   //     @PubSub() pubSub: PubSubEngine,
