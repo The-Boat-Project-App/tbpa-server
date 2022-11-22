@@ -160,7 +160,7 @@ export class MessagesResolver {
       const MessageDeleted = await MessagesModel.deleteOne({
         _id: messageId,
       })
-      console.log('Messages apres suppression mongo', Messages)
+      console.log('Messages apres suppressionnodemon mongo', Messages)
       return MessageDeleted
     } else {
       return 'Error user not allowed to delete a message'
