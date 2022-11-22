@@ -150,6 +150,7 @@ export class MessagesResolver {
   @Mutation(() => Messages, { name: 'deleteMessages' })
   @UseMiddleware(isAuth)
   async deleteMessages(
+    console.log('resolver deleteMessages')
     @Arg('messageId') messageId: string,
     @PubSub() pubSub: PubSubEngine,
     @Ctx() { payload }: MyContext,
