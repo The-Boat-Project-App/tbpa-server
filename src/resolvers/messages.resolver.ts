@@ -156,7 +156,7 @@ export class MessagesResolver {
   ) {
     console.log('resolver deleteMessages')
 
-    const User = await UsersModel.findOne({ _id: payload.id, status: 'crew' })
+    const User = await UsersModel.findOne({ _id: payload.userId, status: 'crew' })
     console.log('User trouvé dans resolver deleteMessages', User)
     if (User) {
       const MessageDeleted = await MessagesModel.deleteOne({
