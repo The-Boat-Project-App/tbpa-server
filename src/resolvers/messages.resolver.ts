@@ -150,11 +150,12 @@ export class MessagesResolver {
   @Mutation(() => Messages, { name: 'deleteMessages' })
   @UseMiddleware(isAuth)
   async deleteMessages(
-    console.log('resolver deleteMessages')
     @Arg('messageId') messageId: string,
     @PubSub() pubSub: PubSubEngine,
     @Ctx() { payload }: MyContext,
   ) {
+    console.log('resolver deleteMessages')
+
     const User = await UsersModel.findOne({ _id: payload.id, status: 'crew' })
     console.log('User trouvé dans resolver deleteMessages', User)
     if (User) {
