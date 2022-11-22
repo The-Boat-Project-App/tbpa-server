@@ -155,10 +155,9 @@ export class MessagesResolver {
     @Ctx() { payload }: MyContext,
   ) {
     console.log('resolver deleteMessages')
-    const User = await UsersModel.findOne(
-      { _id: payload.userId },
-      { $or: [{ status: 'crew' }, { status: 'dev' }] },
-    )
+    const User = await UsersModel.findOne({
+      $and: [{ _id: payload.userId }, { $or: [{ status: 'crew' }, { status: 'dev' }] }],
+    })
     console.log('User trouvé dans resolver deleteMessages', User)
     if (User) {
       const MessageDeleted = await MessagesModel.deleteOne({
