@@ -145,6 +145,51 @@ export class MessagesResolver {
     // const { id, author, mainPicture, content, createdAt } = payload.Messages.payLoad
     return payload
   }
+
+  //resolver de suppression
+  @Mutation(() => Messages, { name: 'deleteMessages' })
+  @UseMiddleware(isAuth)
+  async deleteMessages(
+    @Arg('messageId') messageId: string,
+    @PubSub() pubSub: PubSubEngine,
+    @Ctx() { payload }: MyContext,
+  ) {
+    console.log('resolver deleteMessages')
+    const User = await UsersModel.findOne({
+      $and: [{ _id: payload.userId }, { $or: [{ status: 'crew' }, { status: 'dev' }] }],
+    })
+    console.log('User trouvé dans resolver deleteMessages', User)
+    if (User) {
+      const deletedMessage = await MessagesModel.findOne({ _id: messageId })
+
+      const MessageDeleted = await MessagesModel.deleteOne({
+        _id: messageId,
+      })
+      console.log('Messages apres suppressionnodemon mongo', Messages)
+      const { id, author, createdAt, content, mainPicture } = deletedMessage
+      console.log('messagId avant envoie dans le payload vers sub', messageId)
+      await pubSub.publish('MESSAGE_DELETED_NOTIFICATION', {
+        id,
+        author,
+        createdAt,
+        content,
+        mainPicture,
+      })
+
+      return deletedMessage
+    } else {
+      return 'Error user not allowed to delete a message'
+    }
+  }
+
+  @Subscription({ topics: 'MESSAGE_DELETED_NOTIFICATION' })
+  messageDeleted(@Root() payload: Messages): Messages {
+    console.log('payload in messageDeleted Subscription', payload)
+    // const { id, createdAt, content, mainPicture } = payload
+    // console.log()
+    // console.log('avant de renvoyer ', id, createdAt, content, mainPicture)
+    return payload
+  }
   //   @Query(() => String, { name: 'usersConnectedToChat' })
   //   async usersConnectedToChat(
   //     @PubSub() pubSub: PubSubEngine,

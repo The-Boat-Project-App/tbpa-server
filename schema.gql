@@ -63,6 +63,7 @@ type Mutation {
   createPosts(newPostsInput: PostsInput!): Posts!
   createThemes(newThemesInput: ThemesInput!): ThemeCreatedResponse!
   createUsers(newUsersInput: UsersInput!): RegisterResponse!
+  deleteMessages(messageId: String!): Messages!
   deleteNews(id: String!): String!
   deleteNotes(id: String!): String!
   deletePosts(id: String!): String!
@@ -221,6 +222,7 @@ type RegisterResponse {
 
 type Subscription {
   likeAdded: Posts!
+  messageDeleted: Messages!
   messageSent: Messages!
   newUserConnected: Users!
   newUserDisconnected: Users!
