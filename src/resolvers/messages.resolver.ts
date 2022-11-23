@@ -177,7 +177,7 @@ export class MessagesResolver {
   @Subscription({ topics: 'MESSAGE_DELETED_NOTIFICATION' })
   messageDeleted(@Root() payload: Messages): Messages {
     console.log('payload in messageDeleted Subscription', payload)
-    return payload
+    return { id: payload.messageId }
   }
   //   @Query(() => String, { name: 'usersConnectedToChat' })
   //   async usersConnectedToChat(
