@@ -166,9 +166,15 @@ export class MessagesResolver {
         _id: messageId,
       })
       console.log('Messages apres suppressionnodemon mongo', Messages)
-      const { id } = MessageDeleted
+      const { id, author, createdAt, content, mainPicture } = deletedMessage
       console.log('messagId avant envoie dans le payload vers sub', messageId)
-      await pubSub.publish('MESSAGE_DELETED_NOTIFICATION', deletedMessage)
+      await pubSub.publish('MESSAGE_DELETED_NOTIFICATION', {
+        id,
+        author,
+        createdAt,
+        content,
+        mainPicture,
+      })
 
       return deletedMessage
     } else {
@@ -179,10 +185,10 @@ export class MessagesResolver {
   @Subscription({ topics: 'MESSAGE_DELETED_NOTIFICATION' })
   messageDeleted(@Root() payload: Messages): Messages {
     console.log('payload in messageDeleted Subscription', payload)
-    const { id, createdAt, content, mainPicture } = payload
-    console.log()
-    console.log('avant de renvoyer ', id, createdAt, content, mainPicture)
-    return { id, createdAt, content, mainPicture }
+    // const { id, createdAt, content, mainPicture } = payload
+    // console.log()
+    // console.log('avant de renvoyer ', id, createdAt, content, mainPicture)
+    return payload
   }
   //   @Query(() => String, { name: 'usersConnectedToChat' })
   //   async usersConnectedToChat(
