@@ -180,6 +180,8 @@ export class MessagesResolver {
   messageDeleted(@Root() payload: Messages): Messages {
     console.log('payload in messageDeleted Subscription', payload)
     const { id, createdAt, content, mainPicture } = payload
+    console.log()
+    console.log('avant de renvoyer ', id, createdAt, content, mainPicture)
     return { id, createdAt, content, mainPicture }
   }
   //   @Query(() => String, { name: 'usersConnectedToChat' })
