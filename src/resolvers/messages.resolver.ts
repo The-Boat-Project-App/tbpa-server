@@ -160,15 +160,17 @@ export class MessagesResolver {
     })
     console.log('User trouvé dans resolver deleteMessages', User)
     if (User) {
+      const deletedMessage = await MessagesModel.findOne({ _id: messageId })
+
       const MessageDeleted = await MessagesModel.deleteOne({
         _id: messageId,
       })
       console.log('Messages apres suppressionnodemon mongo', Messages)
       const { id } = MessageDeleted
       console.log('messagId avant envoie dans le payload vers sub', messageId)
-      await pubSub.publish('MESSAGE_DELETED_NOTIFICATION', { messageId })
+      await pubSub.publish('MESSAGE_DELETED_NOTIFICATION', deletedMessage)
 
-      return MessageDeleted
+      return deletedMessage
     } else {
       return 'Error user not allowed to delete a message'
     }
@@ -178,7 +180,7 @@ export class MessagesResolver {
   messageDeleted(@Root() payload: Messages): Messages {
     console.log('payload in messageDeleted Subscription', payload)
 
-    return { id: payload.id, mainPicture: '', content: '', createdAt: null }
+    return payload
   }
   //   @Query(() => String, { name: 'usersConnectedToChat' })
   //   async usersConnectedToChat(
