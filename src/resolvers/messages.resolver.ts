@@ -165,7 +165,7 @@ export class MessagesResolver {
       })
       console.log('Messages apres suppressionnodemon mongo', Messages)
       const { id } = MessageDeleted
-      await pubSub.publish('MESSAGE_DELETED_NOTIFICATION', { id })
+      await pubSub.publish('MESSAGE_DELETED_NOTIFICATION', { messageId })
 
       return MessageDeleted
     } else {
