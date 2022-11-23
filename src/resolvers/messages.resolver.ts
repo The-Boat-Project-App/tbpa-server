@@ -164,10 +164,19 @@ export class MessagesResolver {
         _id: messageId,
       })
       console.log('Messages apres suppressionnodemon mongo', Messages)
+      const { id } = MessageDeleted
+      await pubSub.publish('MESSAGE_NOTIFICATION', { id })
+
       return MessageDeleted
     } else {
       return 'Error user not allowed to delete a message'
     }
+  }
+
+  @Subscription({ topics: 'MESSAGE_DELETED_NOTIFICATION' })
+  messageDeleted(@Root() payload: Messages): Messages {
+    console.log('payload in messageDeleted Subscription')
+    return payload
   }
   //   @Query(() => String, { name: 'usersConnectedToChat' })
   //   async usersConnectedToChat(

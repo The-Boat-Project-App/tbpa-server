@@ -222,6 +222,7 @@ type RegisterResponse {
 
 type Subscription {
   likeAdded: Posts!
+  messageDeleted: Messages!
   messageSent: Messages!
   newUserConnected: Users!
   newUserDisconnected: Users!
