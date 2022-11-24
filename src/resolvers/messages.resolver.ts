@@ -19,30 +19,19 @@ import { MyContext } from './MyContext'
 import { isAuth } from './isAuth'
 @Resolver((_of) => Messages)
 export class MessagesResolver {
-  @UseMiddleware(isAuth)
+  // @UseMiddleware(isAuth)
   @Query(() => [Messages], { name: 'MessagesList', description: 'Get List of Messages' })
-  async getAllMessages(@PubSub() pubSub: PubSubEngine, @Ctx() { payload }: MyContext) {
+  async getAllMessages(@Ctx() { payload }: MyContext) {
     console.log('resolver getallmessages')
     console.log('payload ctx', payload)
-    const newUserConnected = await UsersModel.findOne({ _id: payload.userId })
+    // const newUserConnected = await UsersModel.findOne({ _id: payload.userId })
     const allMessagesInDb = await MessagesModel.find()
       .populate({ path: 'author', model: Users })
       .exec()
     // console.log('allMessagesInDb', allMessagesInDb)
-    console.log('newuserconnected envoyé dans le payload', newUserConnected)
-    const { lang, tokenVersion, id, firstName, lastName, email, password, avatar, status } =
-      newUserConnected
-    await pubSub.publish('USER_CONNECTED_NOTIFICATION', {
-      lang,
-      tokenVersion,
-      id,
-      firstName,
-      lastName,
-      email,
-      password,
-      avatar,
-      status,
-    })
+    // console.log('newuserconnected envoyé dans le payload', newUserConnected)
+    // const { lang, tokenVersion, id, firstName, lastName, email, password, avatar, status } =
+    //   newUserConnected
 
     return allMessagesInDb
   }
