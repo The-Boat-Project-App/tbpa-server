@@ -37,6 +37,9 @@ export class UsersInput implements Partial<Users> {
   status: string
 
   @Field({ nullable: true })
+  desc: string
+
+  @Field({ nullable: true })
   country: string
 
   @Field({ nullable: true })
