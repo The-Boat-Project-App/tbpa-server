@@ -39,6 +39,10 @@ export class Posts {
 
   @Field({ nullable: true })
   @Property({ type: () => String, required: false })
+  video: string
+
+  @Field({ nullable: true })
+  @Property({ type: () => String, required: false })
   content: string
 
   @Field()

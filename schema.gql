@@ -153,6 +153,7 @@ type Posts {
   submitted: Boolean
   title: String!
   validated: String
+  video: String
 }
 
 input PostsInput {
@@ -167,6 +168,7 @@ input PostsInput {
   submitted: Boolean
   title: String!
   validated: String
+  video: String
 }
 
 type Query {
@@ -221,7 +223,6 @@ type RegisterResponse {
 }
 
 type Subscription {
-  likeAdded: Posts!
   messageDeleted: Messages!
   messageSent: Messages!
   newUserConnected: Users!

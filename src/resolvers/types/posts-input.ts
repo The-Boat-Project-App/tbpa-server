@@ -40,6 +40,9 @@ export class PostsInput implements Partial<Posts> {
   validated: string
 
   @Field({ nullable: true })
+  video: string
+
+  @Field({ nullable: true })
   submitted: boolean
 
   @Field({ nullable: true })
