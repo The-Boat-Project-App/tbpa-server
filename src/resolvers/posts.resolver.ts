@@ -87,7 +87,7 @@ export class PostsResolver {
   @UseMiddleware(isAuth)
   async createPosts(
     @Arg('newPostsInput')
-    { title, intro, content, mainPicture, likes, submitted, validated }: PostsInput,
+    { title, intro, content, mainPicture, likes, submitted, validated, video }: PostsInput,
     @Ctx() { payload }: MyContext,
   ): Promise<Posts> {
     const Posts = (
@@ -100,6 +100,7 @@ export class PostsResolver {
         likes,
         submitted,
         validated,
+        video,
       })
     ).save()
 
@@ -134,39 +135,39 @@ export class PostsResolver {
     )
     console.log('result', result)
     const payload = result.likes
-    await pubSub.publish(channel, payload)
+    // await pubSub.publish(channel, payload)
     return result.likes
   }
 
-  @Subscription({ topics: channel })
-  likeAdded(
-    @Root()
-    {
-      id,
-      title,
-      intro,
-      author,
-      mainPicture,
-      content,
-      createdAt,
-      validated,
-      submitted,
-      comments,
-      likes,
-    }: Posts,
-  ): Posts {
-    return {
-      id,
-      title,
-      intro,
-      author,
-      mainPicture,
-      content,
-      createdAt,
-      validated,
-      submitted,
-      comments,
-      likes,
-    }
-  }
+  // @Subscription({ topics: channel })
+  // likeAdded(
+  //   @Root()
+  //   {
+  //     id,
+  //     title,
+  //     intro,
+  //     author,
+  //     mainPicture,
+  //     content,
+  //     createdAt,
+  //     validated,
+  //     submitted,
+  //     comments,
+  //     likes,
+  //   }: Posts,
+  // ): Posts {
+  //   return {
+  //     id,
+  //     title,
+  //     intro,
+  //     author,
+  //     mainPicture,
+  //     content,
+  //     createdAt,
+  //     validated,
+  //     submitted,
+  //     comments,
+  //     likes,
+  //   }
+  // }
 }

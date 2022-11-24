@@ -45,6 +45,10 @@ export class Users {
 
   @Field({ nullable: true })
   @Property({ type: String, required: false })
+  desc: string
+
+  @Field({ nullable: true })
+  @Property({ type: String, required: false })
   status: string
 
   @Field({ nullable: true })

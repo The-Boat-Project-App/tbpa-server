@@ -76,7 +76,9 @@ export class UsersResolver {
 
   @Query(() => [Users], { name: 'usersList', description: 'Get List of Users' })
   async getAllUsers() {
-    return await UsersModel.find()
+    const users = await UsersModel.find()
+    console.log('getallusers ds resolver', users)
+    return users
   }
 
   //* Sign-in with bcrypt compare & JWT
