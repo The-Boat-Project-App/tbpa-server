@@ -116,7 +116,7 @@ export class PostsResolver {
         })
       ).save()
       return Posts
-    } else if (!id == 'error') {
+    } else if (id !== 'error') {
       const existingPost = await PostsModel.findOne({ _id: id })
       console.log('existing Post', existingPost)
       if (!existingPost) {
