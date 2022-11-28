@@ -77,7 +77,7 @@ type Mutation {
   newUserDisconnected: Users!
   revokeRefreshTokensForUser(userId: String!): Boolean!
   updateNotes(editNotesInput: NotesInput!): Notes!
-  updatePosts(editPostsInput: PostsInput!): Posts!
+  updatePost(newPostsInput: PostsInput!): Posts!
   updateTrip: Trip!
 }
 

@@ -107,16 +107,39 @@ export class PostsResolver {
     return Posts
   }
 
-  @Mutation(() => Posts, { name: 'updatePosts' })
-  async updatePosts(@Arg('editPostsInput') { id }: PostsInput): Promise<Posts> {
+  @Mutation(() => Posts, { name: 'updatePost' })
+  @UseMiddleware(isAuth)
+  async updatePost(
+    @Arg('newPostsInput')
+    { id, title, intro, content, mainPicture, likes, submitted, validated, video }: PostsInput,
+    @Ctx() { payload }: MyContext,
+  ): Promise<Posts> {
     const Posts = await PostsModel.findByIdAndUpdate(
       { _id: id },
-      { $inc: { likes: 1 } },
-      { new: true },
+      {
+        title,
+        intro,
+        content,
+        mainPicture,
+        likes,
+        submitted,
+        validated,
+        video,
+      },
     )
-
     return Posts
   }
+
+  // @Mutation(() => Posts, { name: 'updatePosts' })
+  // async updatePosts(@Arg('editPostsInput') { id }: PostsInput): Promise<Posts> {
+  //   const Posts = await PostsModel.findByIdAndUpdate(
+  //     { _id: id },
+  //     { $inc: { likes: 1 } },
+  //     { new: true },
+  //   )
+
+  //   return Posts
+  // }
 
   @Mutation(() => String, { name: 'deletePosts' })
   async deletePosts(@Arg('id') id: string): Promise<String> {
@@ -135,7 +158,7 @@ export class PostsResolver {
     )
     console.log('result', result)
     const payload = result.likes
-    // await pubSub.publish(channel, payload)
+    await pubSub.publish(channel, payload)
     return result.likes
   }
 
