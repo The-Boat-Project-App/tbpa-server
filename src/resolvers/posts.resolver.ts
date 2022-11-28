@@ -87,24 +87,53 @@ export class PostsResolver {
   @UseMiddleware(isAuth)
   async createPosts(
     @Arg('newPostsInput')
-    { title, intro, content, mainPicture, likes, submitted, validated, video }: PostsInput,
+    { id, title, intro, content, mainPicture, likes, submitted, validated, video }: PostsInput,
     @Ctx() { payload }: MyContext,
   ): Promise<Posts> {
-    const Posts = (
-      await PostsModel.create({
-        title,
-        intro,
-        content,
-        author: payload.userId,
-        mainPicture,
-        likes,
-        submitted,
-        validated,
-        video,
-      })
-    ).save()
-
-    return Posts
+    console.log('infos qui arrivent dans createPost resolver', {
+      id,
+      title,
+      intro,
+      content,
+      mainPicture,
+      likes,
+      submitted,
+      validated,
+      video,
+    })
+    const existingPost = await PostsModel.finOne({ _id: id })
+    console.log('existing Post', existingPost)
+    if (!existingPost) {
+      const Posts = (
+        await PostsModel.create({
+          title,
+          intro,
+          content,
+          author: payload.userId,
+          mainPicture,
+          likes,
+          submitted,
+          validated,
+          video,
+        })
+      ).save()
+      return Posts
+    } else {
+      const Posts = await PostsModel.findByIdAndUpdate(
+        { _id: id },
+        {
+          title,
+          intro,
+          content,
+          mainPicture,
+          likes,
+          submitted,
+          validated,
+          video,
+        },
+      )
+      return Posts
+    }
   }
 
   @Mutation(() => Posts, { name: 'updatePost' })
@@ -114,6 +143,17 @@ export class PostsResolver {
     { id, title, intro, content, mainPicture, likes, submitted, validated, video }: PostsInput,
     @Ctx() { payload }: MyContext,
   ): Promise<Posts> {
+    console.log('infos qui arrivent dans updatePost resolver', {
+      id,
+      title,
+      intro,
+      content,
+      mainPicture,
+      likes,
+      submitted,
+      validated,
+      video,
+    })
     const Posts = await PostsModel.findByIdAndUpdate(
       { _id: id },
       {
