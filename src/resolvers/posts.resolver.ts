@@ -101,7 +101,22 @@ export class PostsResolver {
       validated,
       video,
     })
-    if (id !== 'error') {
+    if (id == 'error') {
+      const Posts = (
+        await PostsModel.create({
+          title,
+          intro,
+          content,
+          author: payload.userId,
+          mainPicture,
+          likes,
+          submitted,
+          validated,
+          video,
+        })
+      ).save()
+      return Posts
+    } else if (!id == 'error') {
       const existingPost = await PostsModel.findOne({ _id: id })
       console.log('existing Post', existingPost)
       if (!existingPost) {
@@ -119,22 +134,22 @@ export class PostsResolver {
           })
         ).save()
         return Posts
+      } else {
+        const Posts = await PostsModel.findByIdAndUpdate(
+          { _id: id },
+          {
+            title,
+            intro,
+            content,
+            mainPicture,
+            likes,
+            submitted,
+            validated,
+            video,
+          },
+        )
+        return Posts
       }
-    } else {
-      const Posts = await PostsModel.findByIdAndUpdate(
-        { _id: id },
-        {
-          title,
-          intro,
-          content,
-          mainPicture,
-          likes,
-          submitted,
-          validated,
-          video,
-        },
-      )
-      return Posts
     }
   }
 
