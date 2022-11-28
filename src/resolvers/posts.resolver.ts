@@ -101,23 +101,25 @@ export class PostsResolver {
       validated,
       video,
     })
-    const existingPost = await PostsModel.findOne({ _id: id })
-    console.log('existing Post', existingPost)
-    if (!existingPost) {
-      const Posts = (
-        await PostsModel.create({
-          title,
-          intro,
-          content,
-          author: payload.userId,
-          mainPicture,
-          likes,
-          submitted,
-          validated,
-          video,
-        })
-      ).save()
-      return Posts
+    if (id !== 'error') {
+      const existingPost = await PostsModel.findOne({ _id: id })
+      console.log('existing Post', existingPost)
+      if (!existingPost) {
+        const Posts = (
+          await PostsModel.create({
+            title,
+            intro,
+            content,
+            author: payload.userId,
+            mainPicture,
+            likes,
+            submitted,
+            validated,
+            video,
+          })
+        ).save()
+        return Posts
+      }
     } else {
       const Posts = await PostsModel.findByIdAndUpdate(
         { _id: id },
