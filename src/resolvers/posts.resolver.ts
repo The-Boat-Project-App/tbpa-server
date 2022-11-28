@@ -101,7 +101,7 @@ export class PostsResolver {
       validated,
       video,
     })
-    const existingPost = await PostsModel.finOne({ _id: id })
+    const existingPost = await PostsModel.findOne({ _id: id })
     console.log('existing Post', existingPost)
     if (!existingPost) {
       const Posts = (
