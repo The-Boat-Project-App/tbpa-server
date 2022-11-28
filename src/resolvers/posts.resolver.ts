@@ -16,6 +16,7 @@ import { PostsInput } from './types/posts-input'
 import { MyContext } from './MyContext'
 
 import { isAuth } from './isAuth'
+import { Post } from '@typegoose/typegoose'
 
 const channel = 'LIKES_CHANNEL'
 
@@ -198,8 +199,9 @@ export class PostsResolver {
   //   return Posts
   // }
 
-  @Mutation(() => String, { name: 'deletePosts' })
+  @Mutation(() => Posts, { name: 'deletePosts' })
   async deletePosts(@Arg('id') id: string): Promise<String> {
+    console.log('id dans deletePosts', id)
     const result = await PostsModel.deleteOne({ _id: id })
 
     if (result.ok == 1) return id
