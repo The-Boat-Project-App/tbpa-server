@@ -52,11 +52,6 @@ export const getCoordinate = async () => {
   }
   console.log(boatInformations)
 
-  const newTrip = TripModel({
-    country: 'Marseille',
-  })
-  console.log(newTrip)
-
   await browser.close()
 
   return boatInformations

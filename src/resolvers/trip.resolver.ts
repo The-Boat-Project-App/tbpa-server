@@ -46,6 +46,7 @@ export class TripResolver {
   @Mutation(() => Trip, { name: 'updateTrip' })
   async updateTrips(): Promise<Trip> {
     const coords = await getCoordinate()
+    console.log('coords', coords)
     const updatedTrip = await TripModel.updateOne(
       { _id: '63627a16ad3d7a6d9999e8e9' },
       {
@@ -53,7 +54,7 @@ export class TripResolver {
           locations: {
             latitude: Number(coords.coords[0]),
             longitude: Number(coords.coords[1]),
-            date: coords.date,
+            date: new Date(),
             name: coords.currentPort,
             description: 'description',
           },
@@ -64,6 +65,7 @@ export class TripResolver {
     const refreshedTrip = await TripModel.findOne({
       _id: '63627a16ad3d7a6d9999e8e9',
     })
+    console.log('refreshedTrip', refreshedTrip)
     return refreshedTrip
   }
 }
