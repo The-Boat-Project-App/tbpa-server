@@ -79,6 +79,7 @@ type Mutation {
   updateNotes(editNotesInput: NotesInput!): Notes!
   updatePost(newPostsInput: PostsInput!): Posts!
   updateTrip: Trip!
+  userUpdate(UsersUpdateInput: UsersInput!): Users!
 }
 
 """The News Model"""
@@ -195,9 +196,6 @@ type Query {
 
   """Get List of Posts By User"""
   PostsByUserList(id: String!): [Posts!]!
-
-  """Get List of Posts By User"""
-  PostsByUserListWithEmail(email: String!): [Posts!]!
 
   """Get List of Posts"""
   PostsList: [Posts!]!

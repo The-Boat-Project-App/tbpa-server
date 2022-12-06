@@ -68,6 +68,20 @@ export class UsersResolver {
   }
   //*
 
+  @Mutation(() => Users, { nullable: false, name: 'userUpdate' })
+  @UseMiddleware(isAuth)
+  async updateUserData(
+    @Arg('UsersUpdateInput') { firstName, lastName, email, password, avatar }: UsersInput,
+    @Ctx() { payload }: MyContext,
+  ) {
+    const updatedUser = await UsersModel.findByIdAndUpdate(
+      { _id: payload.userId },
+      { firstName, lastName, avatar },
+    )
+    console.log('updatedUser', updatedUser)
+    return updatedUser
+  }
+
   @Query((_returns) => Users, { nullable: false, name: 'user' })
   async getUsersById(@Arg('id') id: string) {
     console.log('dans le resolver users')
