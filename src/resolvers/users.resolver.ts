@@ -74,6 +74,12 @@ export class UsersResolver {
     return await UsersModel.findById({ _id: id })
   }
 
+  @Query((_returns) => Users, { nullable: false, name: 'userEmail' })
+  async getUsersByEmail(@Arg('email') email: string) {
+    console.log('dans le resolver usersbyemail')
+    return await UsersModel.findOne({ email: email })
+  }
+
   @Query(() => [Users], { name: 'usersList', description: 'Get List of Users' })
   async getAllUsers() {
     const users = await UsersModel.find()

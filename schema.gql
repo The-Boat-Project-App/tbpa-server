@@ -196,6 +196,9 @@ type Query {
   """Get List of Posts By User"""
   PostsByUserList(id: String!): [Posts!]!
 
+  """Get List of Posts By User"""
+  PostsByUserListWithEmail(email: String!): [Posts!]!
+
   """Get List of Posts"""
   PostsList: [Posts!]!
   Trip(id: String!): Trip!
@@ -207,6 +210,7 @@ type Query {
   """Get List of Notes"""
   notesList: [Notes!]!
   user(id: String!): Users!
+  userEmail(email: String!): Users!
 
   """Get List of Users"""
   usersList: [Users!]!
