@@ -51,16 +51,6 @@ export class PostsResolver {
     return foundPosts
   }
 
-  @Query(() => [Posts], {
-    name: 'PostsByUserListWithEmail',
-    description: 'Get List of Posts By User',
-  })
-  async getPostsByUserEmail(@Arg('email') email: string) {
-    console.log('email from front', email)
-    const foundPosts = await PostsModel.find({ author: id, validated: 'validated' })
-    console.log(foundPosts)
-    return foundPosts
-  }
   // get all draft posts
   @Query(() => [Posts], {
     name: 'AllDraftPostsByUserList',
